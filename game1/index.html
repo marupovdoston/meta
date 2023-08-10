@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Circle Clicker</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+    <h1>Circle Clicker</h1>
+    <p id="score">Score: 0</p>
+    <div id="game-container"></div>
+
+    <script src="script.js"></script>
+    <script>
+        const gameContainer = document.getElementById("game-container");
+        const scoreElement = document.getElementById("score");
+
+        let score = 0;
+        let timer;
+
+        function startGame() {
+            score = 0;
+            scoreElement.textContent = `Score: ${score}`;
+
+            gameContainer.innerHTML = "";
+            gameContainer.removeEventListener("click", handleClick);
+
+            timer = setInterval(createCircle, 1000);
+            setTimeout(endGame, 10000);
+        }
+
+        function createCircle() {
+            const circle = document.createElement("div");
+            circle.classList.add("circle");
+            gameContainer.appendChild(circle);
+
+            circle.addEventListener("click", handleClick);
+        }
+
+        function handleClick() {
+            this.remove();
+            score++;
+            scoreElement.textContent = `Score: ${score}`;
+        }
+
+        function endGame() {
+            clearInterval(timer);
+            gameContainer.innerHTML = `<h2>Game Over!</h2><p>Your score: ${score}</p><button onclick="startGame()">Play Again</button>`;
+        }
+
+        startGame();
+    </script>
+</body>
+
+</html>
